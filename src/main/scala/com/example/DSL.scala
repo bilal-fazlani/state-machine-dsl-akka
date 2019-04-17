@@ -1,16 +1,25 @@
 package com.example
 
 class StateMachine
-class State
-class Entry
-class When
-class Exit
-class Transition
+
+trait MachineOp
+
+class State extends MachineOp
+
+trait StateOp
+
+class Entry extends StateOp
+class When  extends StateOp
+class Exit  extends StateOp
+
+trait WhenOp
+
+class Transition extends WhenOp
 
 class DSL[T] {
-  def stateMachine(name: String)(machine: => Unit): StateMachine = ???
+  def stateMachine(name: String)(machine: => MachineOp): StateMachine = ???
 
-  def state(name: String)(state : => Unit): State = ???
+  def state(name: String)(state : => StateOp): State = ???
 
   def entry(entryFunction: => Unit): Entry = ???
 
@@ -47,7 +56,9 @@ object Main extends App {
     }
 
     state("B"){
-
+      exit {
+        println("B state exited")
+      }
     }
   }
 }
