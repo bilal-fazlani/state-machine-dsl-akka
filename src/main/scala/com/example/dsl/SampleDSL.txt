@@ -1,0 +1,32 @@
+
+  Statemachine "ABC"{
+    Initial State "A"{
+        entry{
+          entryFunction(){}
+        }
+
+        when(eventFunction() /*conditions*/) {
+            actionFunction()
+            transition "B"
+        }
+        when(eventFunction() /*conditions*/) {
+          actionFunction()
+          transition "C"
+        }
+
+        exit {
+          exitFunction(){}
+        }
+      }
+
+    State "B"{
+      entryFunction(){}
+
+      when(eventFunction() /*conditions*/) {
+        actionFunction()
+        transition "C"
+      }
+
+      exitFunction(){}
+      }
+  }
