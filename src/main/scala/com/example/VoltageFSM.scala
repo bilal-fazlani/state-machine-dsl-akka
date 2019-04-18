@@ -9,6 +9,8 @@ import scala.concurrent.duration.DurationDouble
 
 object VoltageFSM {
   trait Message
+
+  // Can be abstracted as `int v`. It will auto generate this case class!
   case class Voltage(value: Int) extends Message
   private case object SwitchToLow extends Message
 
@@ -16,6 +18,8 @@ object VoltageFSM {
     println("scheduling SwitchToLow after 5 seconds")
     ctx.scheduleOnce(5.seconds, ctx.self, SwitchToLow)
 
+    // this block has to be taken out. For this example, it is showing PV simulation logic.
+    // Nothing to do with init state/behaviour
     implicit val mat: ActorMaterializer = ActorMaterializer()(ctx.system)
 
     Source
@@ -35,6 +39,7 @@ object VoltageFSM {
       })
       .runForeach(number => ctx.self ! Voltage(number))
 
+    //I am not sure why we need "switchToLow" here. As any message after 5 secs will transit init -> low
     Behaviors.receiveMessagePartial {
       case SwitchToLow =>
         println("SwitchToLow message received after 5 seconds")

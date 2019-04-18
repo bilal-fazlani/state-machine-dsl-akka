@@ -1,0 +1,19 @@
+Statemachine DSL
+- [ ] Statemachine XYZ
+    - [ ] initState : A
+    - [ ] State A
+        - [ ] Entry function (actions in an entry block are executed whenever the state is entered from a different state)
+        - [ ] Event function -> Next State (transition at the end)
+        - [ ] Action function (based on the output of event function)
+        - [ ] Exit function
+
+Challenges
+* Compositional consistency.
+    * A state can only be inside a statemachine not vice-versa. An entryFunction() can be only inside a state
+* Mild Ordering enforcement. For now, we can be flexible with it.
+* Elements specification restriction.
+    * Zero or one entry and exit block inside a state, while multiple when() is possible.
+* Enforce type safety.
+    * Return type of eventFunc() should be boolean
+* Referential integrity.
+    * In case of transition, next state should be a valid one. Compile type referential check
